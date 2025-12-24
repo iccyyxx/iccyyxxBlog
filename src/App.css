@@ -1,0 +1,42 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 80px;
+  animation: fadeIn 0.6s ease;
+}
+
+/* 装饰性元素 */
+.app::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--light-pink) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.3;
+  z-index: -1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.app::after {
+  content: '';
+  position: fixed;
+  bottom: -30%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--light-purple) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.3;
+  z-index: -1;
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
