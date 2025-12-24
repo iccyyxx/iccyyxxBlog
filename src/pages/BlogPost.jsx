@@ -1,12 +1,40 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { getBlogPost, getBlogPosts } from '../data/blogPosts'
+import { useState, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeHighlight from 'rehype-highlight'
+import rehypeRaw from 'rehype-raw'
+import { getBlogPost, getBlogPosts, loadBlogContent } from '../data/blogPosts'
 import './BlogPost.css'
+import 'highlight.js/styles/github-dark.css'
 
 function BlogPost() {
   const { id } = useParams()
   const navigate = useNavigate()
   const post = getBlogPost(id)
   const allPosts = getBlogPosts()
+  const [content, setContent] = useState('')
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(() => {
+    if (post && post.contentFile) {
+      setLoading(true)
+      loadBlogContent(post.contentFile)
+        .then(markdownContent => {
+          if (markdownContent) {
+            setContent(markdownContent)
+          } else {
+            setContent('# 文章内容加载失败\n\n抱歉，无法加载文章内容。')
+          }
+          setLoading(false)
+        })
+        .catch(error => {
+          console.error('加载文章失败:', error)
+          setContent('# 文章内容加载失败\n\n抱歉，无法加载文章内容。')
+          setLoading(false)
+        })
+    }
+  }, [post])
   
   if (!post) {
     return (
@@ -54,31 +82,46 @@ function BlogPost() {
         </header>
 
         <div className="post-content">
-          {post.content.split('\n').map((paragraph, index) => {
-            // 处理标题
-            if (paragraph.startsWith('# ')) {
-              return <h1 key={index} className="content-h1">{paragraph.slice(2)}</h1>
-            }
-            if (paragraph.startsWith('## ')) {
-              return <h2 key={index} className="content-h2">{paragraph.slice(3)}</h2>
-            }
-            if (paragraph.startsWith('### ')) {
-              return <h3 key={index} className="content-h3">{paragraph.slice(4)}</h3>
-            }
-            
-            // 处理代码块
-            if (paragraph.startsWith('```')) {
-              const language = paragraph.slice(3)
-              return <div key={index} className="code-block-marker" data-lang={language}></div>
-            }
-            
-            // 处理普通段落
-            if (paragraph.trim()) {
-              return <p key={index} className="content-paragraph">{paragraph}</p>
-            }
-            
-            return <br key={index} />
-          })}
+          {loading ? (
+            <div className="loading-content">
+              <div className="loading-spinner"></div>
+              <p>加载中...</p>
+            </div>
+          ) : (
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight, rehypeRaw]}
+              components={{
+                h1: ({node, ...props}) => <h1 className="content-h1" {...props} />,
+                h2: ({node, ...props}) => <h2 className="content-h2" {...props} />,
+                h3: ({node, ...props}) => <h3 className="content-h3" {...props} />,
+                p: ({node, ...props}) => <p className="content-paragraph" {...props} />,
+                code: ({node, inline, className, children, ...props}) => {
+                  return inline ? (
+                    <code className="inline-code" {...props}>
+                      {children}
+                    </code>
+                  ) : (
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
+                  )
+                },
+                pre: ({node, ...props}) => <pre className="code-block" {...props} />,
+                table: ({node, ...props}) => (
+                  <div className="table-wrapper">
+                    <table className="content-table" {...props} />
+                  </div>
+                ),
+                blockquote: ({node, ...props}) => <blockquote className="content-blockquote" {...props} />,
+                ul: ({node, ...props}) => <ul className="content-ul" {...props} />,
+                ol: ({node, ...props}) => <ol className="content-ol" {...props} />,
+                li: ({node, ...props}) => <li className="content-li" {...props} />,
+              }}
+            >
+              {content}
+            </ReactMarkdown>
+          )}
         </div>
 
         <footer className="post-footer">
@@ -110,4 +153,3 @@ function BlogPost() {
 }
 
 export default BlogPost
-
