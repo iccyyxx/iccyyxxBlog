@@ -6,8 +6,11 @@ import BlogPost from './pages/BlogPost'
 import './App.css'
 
 function App() {
+  // GitHub Pages 部署时需要设置 basename
+  const basename = import.meta.env.PROD ? '/iccyyxxBlog' : '';
+  
   return (
-    <Router>
+    <Router basename={basename}>
       <div className="app">
         <Navbar />
         <main className="main-content">
