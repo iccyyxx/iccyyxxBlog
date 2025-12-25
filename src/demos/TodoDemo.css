@@ -1,0 +1,149 @@
+.todo-demo {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.todo-container {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.todo-title {
+  text-align: center;
+  color: #ff6b9d;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.todo-input-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.todo-input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: 2px solid #ffc8dd;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.todo-input:focus {
+  outline: none;
+  border-color: #ff6b9d;
+  box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.1);
+}
+
+.todo-add-btn {
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.todo-add-btn:hover {
+  transform: translateY(-2px);
+}
+
+.todo-add-btn:active {
+  transform: translateY(0);
+}
+
+.todo-list {
+  margin-bottom: 1.5rem;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #fff0f6;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s;
+}
+
+.todo-item:hover {
+  background: #ffe0f0;
+  transform: translateX(5px);
+}
+
+.todo-item.completed {
+  opacity: 0.6;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 1rem;
+  color: #333;
+}
+
+.todo-delete-btn {
+  padding: 0.5rem 1rem;
+  background: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.todo-delete-btn:hover {
+  background: #ff3838;
+  transform: scale(1.05);
+}
+
+.todo-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+.todo-stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .todo-demo {
+    padding: 1rem;
+  }
+  
+  .todo-container {
+    padding: 1.5rem;
+  }
+  
+  .todo-title {
+    font-size: 1.5rem;
+  }
+}
+

@@ -3,6 +3,8 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import BlogList from './pages/BlogList'
 import BlogPost from './pages/BlogPost'
+import DemoList from './pages/DemoList'
+import DemoDetail from './pages/DemoDetail'
 import './App.css'
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/demos" element={<DemoList />} />
+            <Route path="/demos/:id" element={<DemoDetail />} />
           </Routes>
         </main>
       </div>

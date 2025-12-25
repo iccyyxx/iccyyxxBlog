@@ -31,6 +31,15 @@ function Navbar() {
               博客
             </Link>
           </li>
+          <li>
+            <Link 
+              to="/demos" 
+              className={`nav-link ${location.pathname.includes('/demos') ? 'active' : ''}`}
+            >
+              <span className="nav-icon">✨</span>
+              Demo
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
